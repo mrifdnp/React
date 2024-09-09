@@ -14,6 +14,18 @@ const ProductPage = () => {
  <CardProduct.Footer price="Priceless"/>
 
  </CardProduct>
+
+
+ <CardProduct>
+<CardProduct.Header image="/teresa.jpg"/>
+
+ <CardProduct.Body title="IKEDA TERESA">
+    No.1 Best Girl
+ </CardProduct.Body>
+
+ <CardProduct.Footer price="Priceless"/>
+
+ </CardProduct>
         </div>
     )
 }
