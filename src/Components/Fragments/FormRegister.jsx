@@ -8,7 +8,7 @@ const FormRegister = () => {
         <InputForm label="Email" type="email" name="Email" placeholder="example@gmail.com"/>
         <InputForm label="Password" type="password" name="password" placeholder="********"/>
         <InputForm label="Confirm Password" type="password" name="confirmPassword" placeholder="********"/>
-        <Button variant="bg-blue-600 w-full">Register</Button>
+        <Button className="bg-blue-600 w-full">Register</Button>
         </div>
         
       </form>

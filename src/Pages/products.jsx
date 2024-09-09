@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-key */
 
+import Button from "../Components/Elements/Button/button"
 import CardProduct from "../Components/Fragments/Card"
 
 
@@ -27,14 +27,24 @@ const oshi = [
     }
 ]
 
-const ProductPage = () => {
-    return (
-        <div className="flex justify-center py-5">
+const email = localStorage.getItem('email')
 
+const ProductPage = () => {
+    const handleLogout = () => {
+        localStorage.removeItem('email')
+        localStorage.removeItem('password')
+        window.location.href = "/login" 
+    }
+    return (
+        <>
+          <div className="flex justify-end h-20 bg-gray-800 text-white items-center px-10 ">{email}
+            <Button className="ml-5" onClick={handleLogout}>Logout</Button>
+          </div>
+        <div className="flex justify-center py-5">
 
  {oshi.map((oshi)=>(
 
- <CardProduct>
+ <CardProduct key={oshi.id}>
  <CardProduct.Header image={oshi.image}/>
  
   <CardProduct.Body title={oshi.title}>
@@ -46,6 +56,7 @@ const ProductPage = () => {
   </CardProduct>
  ))}
         </div>
+        </>
     );
 };
 
