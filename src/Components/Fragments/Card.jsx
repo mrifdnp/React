@@ -16,12 +16,12 @@ const CardProduct = (props) => {
 
 
 const Body = (props) => {
-    const {children, title} = props
+    const {children, name} = props
     
     return(
         <div className="px-5 pb-5 h-full">
         <a href="#">
-            <h5 className="text-xl font-semibold tracking-tight text-white ">{title}</h5>
+            <h5 className="text-xl font-semibold tracking-tight text-white ">{name}</h5>
             <p className="text-s text-white">{children}</p>
         </a>
     </div>
@@ -29,12 +29,13 @@ const Body = (props) => {
 }
 
 const Footer = (props) => {
-    const {price } = props
+
+    const {price,handleAddtoCart,id } = props
     
     return(
         <div className="flex item-center justify-between px-5 pb-5">
-        <span className="text-xl font-bold text-white ">{price}</span>
-        <Button className="bg-blue-600  ">Text Now</Button>
+        <span className="text-xl font-bold text-white ">Rp{price.toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}</span>
+        <Button className="bg-blue-600  " onClick={() => handleAddtoCart(id)}>Add To Oshi</Button>
      </div>
     )
 }
