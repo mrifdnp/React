@@ -1,6 +1,9 @@
-const Input = (props) => {
+import { forwardRef } from "react";
+
+// eslint-disable-next-line react/display-name
+const Input = forwardRef((props,ref) => {
 // eslint-disable-next-line react/prop-types
-const {type, placeholder, name} = props;
+const {type, placeholder, name } = props;
 
     return(
 <input 
@@ -9,8 +12,9 @@ const {type, placeholder, name} = props;
         placeholder={placeholder}
         name = {name}
         id={name}
+        ref={ref}
         />
     );
 
-};
+});
 export default Input

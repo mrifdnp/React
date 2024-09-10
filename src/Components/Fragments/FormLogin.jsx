@@ -1,6 +1,8 @@
 import InputForm from "../Elements/Input";
 import Button from "../Elements/Button/button";
 import Swal from 'sweetalert2';
+import { useEffect } from "react";
+import { useRef } from "react";
 const FormLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault()
@@ -21,10 +23,17 @@ const FormLogin = () => {
   
   
   };
+
+  const emailRef = useRef(null);
+  useEffect(() => {
+    emailRef.current.focus();
+  },[]);
+
+  
     return (
         <form onSubmit={handleLogin}>
         <div className="mb-6 ">
-        <InputForm label="Email" type="email" name="email" placeholder="example@gmail.com"/>
+        <InputForm label="Email" type="email" name="email" placeholder="example@gmail.com" ref={emailRef}/>
         <InputForm label="Password" type="password" name="password" placeholder="********"/>
         <Button className="bg-blue-600 w-full" type ="submit">Login</Button>
         </div>
