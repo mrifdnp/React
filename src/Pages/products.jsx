@@ -1,6 +1,6 @@
 import Button from "../Components/Elements/Button/button";
 import CardProduct from "../Components/Fragments/Card";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 const oshi = [
   {
     id: 1,
@@ -29,11 +29,25 @@ const email = localStorage.getItem("email");
 
 const ProductPage = () => {
   const [cart, setCart] = useState([
-    {
-     id: 1,
-      qty: 20,
-    },
+
   ]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(()=>{
+    
+    setCart(JSON.parse(localStorage.getItem("cart")) || [])
+   
+  },[])
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc,item)=>{
+        const product = oshi.find((product)=>product.id === item.id);
+        return acc+product.price * item.qty
+      },0)
+      setTotalPrice(sum)
+      localStorage.setItem("cart",JSON.stringify(cart))
+    }
+  },[cart])
 
   const handleLogout = () => {
     localStorage.removeItem("email");
@@ -81,10 +95,11 @@ const ProductPage = () => {
          
           <table className="table-auto text-left border-separate border-spacing-x-5"><thead>
             <tr>
-                <th>Name</th>
+                <th className="w-400px">Name</th>
                 <th>Price</th>
                 <th>Qty</th>
                 <th>Total</th>
+                
 
                 </tr></thead>
                 <tbody>
@@ -98,7 +113,16 @@ const ProductPage = () => {
                         <td>Rp{(product.price*item.qty).toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}</td>
                        </tr>
                    )
-                })}    
+                })} 
+                <tr>
+                  
+                  <td colSpan={3} className="font-bold">
+                 Total Price</td>
+                  <td className="font-bold">
+                  Rp{totalPrice.toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}
+                  </td>
+                  
+                  </tr>   
                 </tbody>
                     
                     </table>
