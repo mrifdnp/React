@@ -2,53 +2,41 @@ import { useRef } from "react";
 import Button from "../Components/Elements/Button/button";
 import CardProduct from "../Components/Fragments/Card";
 import { useState,useEffect } from "react";
-const oshi = [
-  {
-    id: 1,
-    image: "/teresa.jpg",
-    name: "IKEDA TERESA",
-    description: "No.1 Best Girl",
-    price: 10000,
-  },
-  {
-    id: 2,
-    image: "/ayame.jpg",
-    name: "Ayame shan",
-    description: "Cutest Girl",
-    price: 4000,
-  },
-  {
-    id: 3,
-    image: "/shizuki.jpeg",
-    name: "Shiizuki",
-    description: "shy girl",
-    price: 3000,
-  },
+import { getProducts } from "../services/product.service";
+const products = [
+
 ];
 
 const email = localStorage.getItem("email");
 
 const ProductPage = () => {
-  const [cart, setCart] = useState([
-
-  ]);
+  const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [products, setProducts] = useState([]);
+
+
   useEffect(()=>{
     
     setCart(JSON.parse(localStorage.getItem("cart")) || [])
    
   },[])
 
+
   useEffect(() => {
-    if (cart.length > 0) {
+    getProducts((data) => {
+   setProducts (data)
+    })
+  },[])
+  useEffect(() => {
+    if (products.length>0 && cart.length > 0) {
       const sum = cart.reduce((acc,item)=>{
-        const product = oshi.find((product)=>product.id === item.id);
+        const product = products.find((product)=>product.id === item.id);
         return acc+product.price * item.qty
       },0)
       setTotalPrice(sum)
       localStorage.setItem("cart",JSON.stringify(cart))
     }
-  },[cart])
+  },[cart,products])
 
   const handleLogout = () => {
     localStorage.removeItem("email");
@@ -77,6 +65,7 @@ const ProductPage = () => {
   }
 
 const totalPriceRef = useRef(null)
+
 useEffect(()=>{
   if( cart.length > 0){
     totalPriceRef.current.style.display = "table-row ";
@@ -84,6 +73,8 @@ useEffect(()=>{
     totalPriceRef.current.style.display = "none";
     }
     },[cart])
+
+
 
   return (
     <>
@@ -94,18 +85,18 @@ useEffect(()=>{
         </Button>
       </div>
       <div className="flex justify-center py-5">
-        <div className="w-3/4 flex flex-wrap my-2">
-          {oshi.map((oshi) => (
-            <CardProduct key={oshi.id}>
-              <CardProduct.Header image={oshi.image} />
+        <div className="w-3/4 flex flex-wrap my-2 gap-4">
+          {products.length > 0 && products.map((products) => (
+            <CardProduct key={products.id}>
+              <CardProduct.Header image={products.image} />
 
-              <CardProduct.Body name={oshi.name}>
-                {oshi.description}
+              <CardProduct.Body name={products.title}>
+                {products.description}
               </CardProduct.Body>
 
               <CardProduct.Footer 
-              price={oshi.price}
-              id={oshi.id}
+              price={products.price}
+              id={products.id}
                handleAddtoCart={handleAddtoCart}/>
             </CardProduct>
           ))}
@@ -123,11 +114,11 @@ useEffect(()=>{
 
                 </tr></thead>
                 <tbody>
-                {cart.map((item) => {
-                   const product =oshi.find((oshi) =>oshi.id ===item.id )
+                {products.length > 0 &&  cart.map((item) => {
+                   const product =products.find((products) =>products.id ===item.id )
                    return (
                        <tr key={item.id}>
-                        <td>{product.name}</td>
+                        <td>{product.title}</td>
                         <td>Rp{product.price.toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}</td>
                         <td>{item.qty}</td>
                         <td>Rp{(product.price*item.qty).toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}</td>
@@ -139,7 +130,7 @@ useEffect(()=>{
                   <td colSpan={3} className="font-bold">
                  Total Price</td>
                   <td className="font-bold">
-                  Rp{totalPrice.toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}
+                  ${totalPrice.toLocaleString('id-ID', {styles: 'currency', currency: 'IDR'})}
                   </td>
                   
                   </tr>  
