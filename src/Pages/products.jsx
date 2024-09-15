@@ -3,16 +3,16 @@ import Button from "../Components/Elements/Button/button";
 import CardProduct from "../Components/Fragments/Card";
 import { useState,useEffect } from "react";
 import { getProducts } from "../services/product.service";
-import { getUsername } from "../services/auth.service";
+import { useLogin } from "../Hooks/useLogin";
 
 
-const token = localStorage.getItem("token");
+
 
 const ProductPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
-  const [username,setUsername] = useState("")
+  const username = useLogin()
 
 
   useEffect(()=>{
@@ -21,15 +21,7 @@ const ProductPage = () => {
    
   },[])
 
-useEffect(()=>{
- 
-  if (token) {
-    setUsername(getUsername(token))
 
-  }else {
-    window.location.href = "/login";
-  }
-})
   useEffect(() => {
     getProducts((data) => {
    setProducts (data)
