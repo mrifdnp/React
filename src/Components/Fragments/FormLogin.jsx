@@ -1,40 +1,44 @@
 import InputForm from "../Elements/Input";
 import Button from "../Elements/Button/button";
-import Swal from 'sweetalert2';
+
 import { useEffect } from "react";
 import { useRef } from "react";
+import { login } from "../../services/auth.service";
+import { useState } from "react";
 const FormLogin = () => {
+  const[loginFailed, setLoginFailed] = useState("")
   const handleLogin = (e) => {
     e.preventDefault()
-    const email = e.target.email.value;
-  const password = e.target.password.value;
-    if (!email || !password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Form Belum Terisi!',
-        text: 'Mohon isi semua field di form!',
-      });
-      return;
+    const data = {
+      username : e.target.username.value,
+      password : e.target.password.value,
     }
-    localStorage.setItem('email',e.target.email.value)
-    localStorage.setItem('password',e.target.password.value)
+
+
+login(data,(status, res) =>{
+  if(status){
+    localStorage.setItem('token',res)
     window.location.href = "/products";
+  }
+  else{
+    setLoginFailed(res.response.data)
+    console.log(res.response.data)
+  }
+});
+};
 
-  
-  
-  };
-
-  const emailRef = useRef(null);
+  const usernameRef = useRef(null);
   useEffect(() => {
-    emailRef.current.focus();
+    usernameRef.current.focus();
   },[]);
 
   
     return (
         <form onSubmit={handleLogin}>
         <div className="mb-6 ">
-        <InputForm label="Email" type="email" name="email" placeholder="example@gmail.com" ref={emailRef}/>
+        <InputForm label="Username" type="text" name="username" placeholder="teresapanda" ref={usernameRef}/>
         <InputForm label="Password" type="password" name="password" placeholder="********"/>
+        <p className="text-red-600 text-center mb-5">{loginFailed}</p>
         <Button className="bg-blue-600 w-full" type ="submit">Login</Button>
         </div>
         
