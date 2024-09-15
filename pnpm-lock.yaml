@@ -23,6 +23,9 @@ importers:
       react-router-dom:
         specifier: ^6.26.1
         version: 6.26.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      redux:
+        specifier: ^5.0.1
+        version: 5.0.1
       sweetalert2:
         specifier: ^11.14.0
         version: 11.14.0
@@ -1422,6 +1425,9 @@ packages:
   readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
+
+  redux@5.0.1:
+    resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
 
   reflect.getprototypeof@1.0.6:
     resolution: {integrity: sha512-fmfw4XgoDke3kdI6h4xcUz1dG8uaiv5q9gcEwLS4Pnth2kxT+GZ7YehS1JTMGBQmtV7Y4GFGbs2re2NqhdozUg==}
@@ -3091,6 +3097,8 @@ snapshots:
   readdirp@3.6.0:
     dependencies:
       picomatch: 2.3.1
+
+  redux@5.0.1: {}
 
   reflect.getprototypeof@1.0.6:
     dependencies:

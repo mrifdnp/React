@@ -5,8 +5,11 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { login } from "../../services/auth.service";
 import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
 const FormLogin = () => {
   const[loginFailed, setLoginFailed] = useState("")
+  const navigate= useNavigate()
   const handleLogin = (e) => {
     e.preventDefault()
     const data = {
@@ -18,7 +21,7 @@ const FormLogin = () => {
 login(data,(status, res) =>{
   if(status){
     localStorage.setItem('token',res)
-    window.location.href = "/products";
+   navigate("/products");
   }
   else{
     setLoginFailed(res.response.data)

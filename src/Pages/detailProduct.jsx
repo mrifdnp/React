@@ -2,21 +2,31 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getDetailProduct } from "../services/product.service";
 import { useState } from "react";
+import Button from "../Components/Elements/Button/button";
+import { useNavigate } from "react-router-dom";
 
 const DetailProductPage = () => {
     const { id } = useParams();
     const [product, setProduct] = useState({});
-
+const navigate = useNavigate();
     useEffect(() => {
         getDetailProduct(id, (data) => {
             setProduct(data);
         });
     }, [id]);
 
+    const handleBackClick = () => {
+        navigate("/products");  // Mengarahkan ke halaman sebelumnya
+    };
+
     console.log(product);
 
     return (
-        <div className=" w-100 min-h-screen  flex justify-center items-center">
+       <>
+        <div className="flex justify-start h-20 bg-gray-800 text-white items-center px-10 ">
+            <Button onClick={handleBackClick}>Back</Button>
+         </div>
+       <div className=" w-100 min-h-screen  flex justify-center items-center">
           {Object.keys(product).length > 0 && (
               <div className="flex font-sans">
               <div className="flex-none w-48 relative">
@@ -64,6 +74,7 @@ const DetailProductPage = () => {
           )}
             
         </div>
+       </> 
     );
 };
 
