@@ -8,6 +8,9 @@ import RegisterPage from './Pages/register'
 import ErrorPage from './Pages/error'
 import ProductPage from './Pages/products.jsx'
 import DetailProductPage from './Pages/detailProduct.jsx'
+import { Provider } from 'react-redux'
+import store from '../redux/store'
+
 
 
 const router = createBrowserRouter([
@@ -39,6 +42,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
- <RouterProvider router={router} />
+    
+    <Provider store={store}>
+
+    <RouterProvider router={router} />
+    </Provider>
+  
   </StrictMode>,
 )
